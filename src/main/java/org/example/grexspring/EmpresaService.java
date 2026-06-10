@@ -58,7 +58,7 @@ public class EmpresaService {
             empresa.setFechaFundacion(empresaActualizada.getFechaFundacion());
             empresa.setCiudadSedePrincipal(empresaActualizada.getCiudadSedePrincipal());
             empresa.setSitioWebURL(empresaActualizada.getSitioWebURL());
-            empresa.setEnOperaciones(empresaActualizada.getEnOperaciones());
+            //empresa.setEnOperaciones(empresaActualizada.getEnOperaciones());
             empresa.setEstadoRegistro(empresaActualizada.getEstadoRegistro());
             return repositorio.save(empresa);
         }

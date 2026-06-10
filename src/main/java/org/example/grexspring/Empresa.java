@@ -1,10 +1,12 @@
 package org.example.grexspring;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import jakarta.validation.constraints.*;
+import jdk.jfr.BooleanFlag;
 import org.example.grexspring.validation.Actualizar;
 import org.example.grexspring.validation.Crear;
 
@@ -31,8 +33,9 @@ public class Empresa {
 
     private String sitioWebURL;
 
-    @NotNull
-    private boolean enOperaciones;
+    //Caso especial: es difícil lograr que se acepte tan solo "true" or "false" (el parser de Jackson es muy insistente en tomar cualquier dato como válido)
+    //@NotNull
+    //private Boolean enOperaciones;
 
     //Estado del registro: a=activo, i=inactivo, n=no
     @NotBlank @Pattern(regexp="^(a|i|n)$")
@@ -54,7 +57,7 @@ public class Empresa {
 
     public Empresa (String nombre, String sector, Integer numeroEmpleados,
                     LocalDate fechaFundacion, String ciudadSedePrincipal, String sitioWebURL,
-                    boolean enOperaciones, String estadoRegistro, LocalTime horaSolicitud){
+                    /* enOperaciones,*/ String estadoRegistro, LocalTime horaSolicitud){
         this.nombre=nombre;
 
         this.sector=sector;
@@ -62,7 +65,7 @@ public class Empresa {
         this.fechaFundacion=fechaFundacion;
         this.ciudadSedePrincipal=ciudadSedePrincipal;
         this.sitioWebURL=sitioWebURL;
-        this.enOperaciones=enOperaciones;
+        //this.enOperaciones=enOperaciones;
         this.estadoRegistro=estadoRegistro;
         this.horaSolicitud=horaSolicitud;
         //this.usuarioIngreso=usuarioIngreso;
@@ -78,7 +81,7 @@ public class Empresa {
     public String getCiudadSedePrincipal()
                     {return ciudadSedePrincipal;}
     public String getSitioWebURL(){return sitioWebURL;}
-    public boolean getEnOperaciones(){return enOperaciones;}
+    //public boolean getEnOperaciones(){return enOperaciones;}
     public String getEstadoRegistro(){return estadoRegistro;}
     public LocalTime getHoraSolicitud(){return horaSolicitud;}
     public String getUsuarioIngreso(){return usuarioIngreso;}
@@ -96,7 +99,7 @@ public class Empresa {
                 {this.ciudadSedePrincipal=ciudadSedePrincipal;}
     public void setSitioWebURL(String sitioWebURL)
                 {this.sitioWebURL=sitioWebURL;}
-    public void setEnOperaciones(boolean enOperaciones){this.enOperaciones=enOperaciones;}
+    //public void setEnOperaciones(boolean enOperaciones){this.enOperaciones=enOperaciones;}
     public void setEstadoRegistro(String estadoRegistro){this.estadoRegistro=estadoRegistro;}
     public void setHoraSolicitud(LocalTime horaSolicitud){this.horaSolicitud=horaSolicitud;}
     public void setUsuarioIngreso(String usuarioIngreso){this.usuarioIngreso=usuarioIngreso;}

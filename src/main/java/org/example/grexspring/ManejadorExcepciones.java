@@ -1,5 +1,6 @@
 package org.example.grexspring;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -24,23 +25,35 @@ public class ManejadorExcepciones {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(campo+": "+mensajeError);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<String> manejarConstraint(ConstraintViolationException ex){
+
+        String errores = ex.getConstraintViolations().stream().map(v -> v.getPropertyPath() + ": " + v.getMessage())
+                .reduce("", (a,b) -> a + b + "\n");
+
+        return ResponseEntity.badRequest().body(errores);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> manejarFormatoInvalido(HttpMessageNotReadableException ex){
-        String mensajeError=ex.getMessage();
 
-        if (mensajeError.contains("LocalTime")){
-            return ResponseEntity.badRequest().body("Formato inválido para hora (utilice HH:MM)...");
+        Throwable causa = ex.getMostSpecificCause();
+        String mensaje = (causa != null) ? causa.getMessage() : ex.getMessage();
+
+        if (mensaje.contains("LocalTime")) {
+            return ResponseEntity.badRequest().body("Formato inválido para hora. Use HH:MM (ej: 14:30)...");
         }
 
-        if (mensajeError.contains("LocalDate")){
-            return ResponseEntity.badRequest().body("Formato inválido para fecha (utilice AAAA-MM-DD)...");
+        if (mensaje.contains("LocalDate")) {
+            return ResponseEntity.badRequest().body("Formato inválido para fecha. Use AAAA-MM-DD (ej: 2026-12-25)...");
         }
 
-        if (mensajeError.contains("JSON")){
-            return ResponseEntity.badRequest().body("Formato de JSON inválido...");
+        if (mensaje.contains("JSON") || mensaje.contains("Unexpected") || mensaje.contains("Unrecognized") || mensaje.contains("EOF")) {
+            return ResponseEntity.badRequest()
+                    .body("JSON inválido o mal formado. Revise comas, comillas y estructura...");
         }
 
-        return ResponseEntity.badRequest().body("Formato de datos inválido...");
+        return ResponseEntity.badRequest().body("Error en el formato del request.");
     }
 
     @ExceptionHandler(Exception.class)
