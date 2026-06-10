@@ -69,8 +69,6 @@ public class EmpresaController {
 
     //@PostMapping indica que responde a peticiones HTTP POST
     //@RequestBody le dice a Spring que convierta el JSON recibido en un objeto Empresa
-    //repositorio.save() guarda el objeto en la base de datos
-    //Spring devuelve automáticamente el objeto guardado como JSON
     @PostMapping
     public String crear(@Validated(Crear.class) @RequestBody Empresa empresa){
         service.crear(empresa);

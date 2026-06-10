@@ -23,6 +23,8 @@ public class EmpresaService {
         //this.empresa = empresa;
     }
 
+    //repositorio.save() guarda el objeto en la base de datos
+    //Spring devuelve automáticamente el objeto guardado como JSON
     public Empresa crear(Empresa empresa) {
         HorarioPermitido horario = horarioRepo.findById(1L).orElseThrow();
 
