@@ -36,19 +36,26 @@ public class ManejadorExcepciones {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> manejarFormatoInvalido(HttpMessageNotReadableException ex){
+        String mensaje=ex.getMessage();
 
-        Throwable causa = ex.getMostSpecificCause();
-        String mensaje = (causa != null) ? causa.getMessage() : ex.getMessage();
+        //debug
+        /*System.out.println("EX:");
+        System.out.println(ex.getMessage());
 
-        if (mensaje.contains("LocalTime")) {
+        System.out.println("CAUSE:");
+        System.out.println(ex.getMostSpecificCause().getMessage());
+
+        return ResponseEntity.badRequest().body(mensaje);*/
+
+        if (mensaje.contains("LocalTime")){
             return ResponseEntity.badRequest().body("Formato inválido para hora. Use HH:MM (ej: 14:30)...");
         }
 
-        if (mensaje.contains("LocalDate")) {
+        if (mensaje.contains("LocalDate")){
             return ResponseEntity.badRequest().body("Formato inválido para fecha. Use AAAA-MM-DD (ej: 2026-12-25)...");
         }
 
-        if (mensaje.contains("JSON") || mensaje.contains("Unexpected") || mensaje.contains("Unrecognized") || mensaje.contains("EOF")) {
+        if (mensaje.contains("JSON")||mensaje.contains("Unexpected")||mensaje.contains("Unrecognized")||mensaje.contains("EOF")){
             return ResponseEntity.badRequest()
                     .body("JSON inválido o mal formado. Revise comas, comillas y estructura...");
         }
