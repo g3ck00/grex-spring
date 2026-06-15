@@ -1,5 +1,6 @@
 package org.example.grexspring;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -16,19 +17,20 @@ public class Empresa {
     @GeneratedValue(strategy=GenerationType.IDENTITY) //Funciona como el "AutoIncrease" para IDs en SQL
     private Long id;
 
-    @NotBlank
+    @NotBlank(message="El nombre no puede estar vacío.")
     private String nombre;
 
-    @NotBlank
+    @NotBlank(message="El sector no puede estar vacío.")
     private String sector;
 
-    @Positive
+    @Positive(message="El número de empleados no puede ser menor o igual a cero.")
     private Integer numeroEmpleados;
 
-    @PastOrPresent @NotNull
+    @PastOrPresent(message="La fecha no puede ser después del día actual.")
+    @NotNull(message="La fecha de fundación no puede estar vacío.")
     private LocalDate fechaFundacion;
 
-    @NotBlank
+    @NotBlank(message="La ciudad de la sede principal no puede estar vacía.")
     private String ciudadSedePrincipal;
 
     private String sitioWebURL;
@@ -38,16 +40,17 @@ public class Empresa {
     //private Boolean enOperaciones;
 
     //Estado del registro: a=activo, i=inactivo, n=no
-    @NotBlank @Pattern(regexp="^(a|i|n)$")
+    @NotBlank(message="El estado del registro no puede estar vacío...")
+    @Pattern(regexp="^(a|i|n)$", message="Ingrese solo una opción válida (a, i, n)...")
     private String estadoRegistro;
 
-    @NotNull
+    @NotNull(message="La hora de solicitud no puede estar vacía.")
     private LocalTime horaSolicitud;
 
-    @NotBlank(message="El usuario de ingreso es obligatorio...", groups = Crear.class)
+    @NotBlank(message="El usuario de ingreso no puede estar vacío...", groups=Crear.class)
     private String usuarioIngreso;
 
-    @NotBlank(message="El usuario de modificación es obligatorio...", groups = Actualizar.class)
+    @NotBlank(message="El usuario de modificación no puede estar vacío...", groups = Actualizar.class)
     private String usuarioModificacion;
 
     //Toda entidad JPA debe tener un constructor sin argumentos (al menos public o protected).

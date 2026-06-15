@@ -3,6 +3,7 @@ package org.example.grexspring;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ public class GrexSpringApplication {
         SpringApplication.run(GrexSpringApplication.class, args);
     }
 
-    @Bean
+    /*@Bean
     CommandLineRunner cargarDatos(Repositorio repositorio){
         return args->{
             repositorio.save(new Empresa(
@@ -25,7 +26,7 @@ public class GrexSpringApplication {
                     LocalDate.of(1999,12,25),
                     "Guayaquil",
                     "empresa-a.com",
-                    /*true,*/
+                    /*true,*//*
                     "a",
                     LocalTime.of(12,0)));
 
@@ -36,7 +37,7 @@ public class GrexSpringApplication {
                     LocalDate.of(1945,12,1),
                     "Quito",
                     "empresa-b.com.ec",
-                    /*false,*/
+                    /*false,*//*
                     "i",
                     LocalTime.of(12,0)));
 
@@ -47,7 +48,7 @@ public class GrexSpringApplication {
                     LocalDate.of(1985,1,15),
                     "Manta",
                     "empresa-c.com",
-                    /*true,*/
+                    /*true,*//*
                     "a",
                     LocalTime.of(12,0)));
 
@@ -58,7 +59,7 @@ public class GrexSpringApplication {
                     LocalDate.of(2000,6,1),
                     "Cuenca",
                     "empresa-d.com",
-                    /*false,*/
+                    /*false,*//*
                     "i",
                     LocalTime.of(12,0)));
 
@@ -69,7 +70,7 @@ public class GrexSpringApplication {
                     LocalDate.of(1975,6,30),
                     "Ambato",
                     "empresa-e.com",
-                    /*true,*/
+                    /*true,*//*
                     "a",
                     LocalTime.of(12,0)));
 
@@ -80,7 +81,7 @@ public class GrexSpringApplication {
                     LocalDate.of(1991,9,14),
                     "Guayaquil",
                     "empresa-f.com",
-                    /*true,*/
+                    /*true,*//*
                     "n",
                     LocalTime.of(12,0)));
         };
@@ -91,5 +92,5 @@ public class GrexSpringApplication {
         return args ->{
             horarioRepo.save(new HorarioPermitido(LocalTime.of(8,0), LocalTime.of(17,0)));
         };
-    }
+    }*/
 }
